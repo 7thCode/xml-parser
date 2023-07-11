@@ -8,10 +8,6 @@
 
 import {ParserStream} from './stream';
 
-
-///////////////////////////////
-
-
 export class TokenScanner {
 
 	public stream: ParserStream;
@@ -55,7 +51,7 @@ export class TokenScanner {
 
 	public skip(S: string): boolean {
 		const result = this.stream.skip(S);
-		this.stream.commit();
+		this.stream.advance();
 		return result;
 	}
 
@@ -92,11 +88,13 @@ export class TokenScanner {
 		return result;
 	}
 
-	public commit(evaluation: (...args: any[]) => boolean): boolean {
+	public fix(evaluation: (...args: any[]) => boolean): boolean {
 		let result: boolean = false;
 		if (evaluation()) {
 			result = true;
-			this.stream.commit();
+			this.stream.advance();
+		} else {
+			this.stream.rewind();
 		}
 		return result;
 	}
@@ -448,8 +446,8 @@ export class HTMLParser extends TokenScanner {
 	public is_Comment(): boolean {
 		return this.serial([
 			() => {return this.skip("<!--")},
-			() => {return this.repeat0(
-				() => {return this.commit(
+			() => {return this.fix(
+				() => {return this.repeat0(
 						() => {return this.is_Char2()}
 				)}
 //				() => {return this.select([

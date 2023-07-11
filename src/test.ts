@@ -9,12 +9,15 @@
 import {HTMLParser, TokenScanner} from "./index";
 import {ParserStream} from "./stream";
 
-//describe('ParserStream', () => {
-///	const stream = new ParserStream("ABCDEF");
-//	expect(stream.skip("ABC")).toBeTruthy();
-//	expect(stream.skip("DEF")).toBeTruthy();
-//})
-
+describe('ParserStream', () => {
+	const stream = new ParserStream("ABCDEF");
+	if (stream.skip("ABC")) {
+		stream.advance();
+	} else {
+		stream.rewind();
+	}
+	expect(stream.skip("DEF")).toBeTruthy();
+})
 
 describe('HTMLParser', () => {
 
@@ -235,8 +238,8 @@ describe('HTMLParser', () => {
 		let parser = new HTMLParser(null, new ParserStream("ABCDEFGHIJK"));
 		expect(parser.serial(
 			[
-				() => {return parser.commit(() => {return parser.skip("ABCD")})},
-				() => {return parser.commit(() => {return parser.skip("EFGH")})}
+				() => {return parser.fix(() => {return parser.skip("ABCD")})},
+				() => {return parser.fix(() => {return parser.skip("EFGH")})}
 			]
 		)).toBeTruthy();
 

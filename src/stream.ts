@@ -65,7 +65,7 @@ export class ParserStream {
 	 *
 	 * @remarks save point.
 	 */
-	public commit(): void {
+	public advance(): void {
 		this.start = this.end;
 	}
 
@@ -74,7 +74,7 @@ export class ParserStream {
 	 *
 	 * @remarks current position restore to restore_point.
 	 */
-	public restore(): void {
+	public rewind(): void {
 		this.end = this.start;
 	}
 
