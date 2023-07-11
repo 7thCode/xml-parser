@@ -1,0 +1,39 @@
+{
+  "name": "html_parser",
+  "version": "0.0.1",
+  "description": "HTML Parser.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "test": "jest",
+    "prepare": "npm run build",
+    "prebuild": "rimraf dist",
+    "build": "run-p build:*",
+    "build:common": "tsc",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "doc": "typedoc src/index.ts --out docs/typedoc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:7thCode/structtransform.git"
+  },
+  "keywords": [
+    "object",
+    "structure",
+    "template",
+    "transform"
+  ],
+  "author": "7thCode",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.0",
+    "jest": "^28.1.2",
+    "npm-run-all": "^4.1.5",
+    "ts-jest": "^28.0.5",
+    "ts-node": "^10.8.2",
+    "typedoc": "^0.23.9",
+    "typescript": "^4.7.4"
+  }
+}
